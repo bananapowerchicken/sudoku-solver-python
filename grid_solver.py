@@ -31,12 +31,20 @@ def is_possible(x, y, n) -> bool:
         if grid[x][col] == n:
             return False
         
+    # в range последнее указанное число не включительно
     # проверка каждого квадратного блока
+    x_block_start = (x // 3)*3
+    y_block_start = (x // 3)*3
+    for X in range(x_block_start, x_block_start+3):
+        for Y in range(y_block_start, y_block_start+3):
+            if grid[X][Y] == n:
+                return False
+            
+    return True
 
 
 def solve():
     pass
 
-
-
-is_possible(0, 0, 5)
+for i in range(1, 10):
+    print(i, is_possible(0, 0, i))
