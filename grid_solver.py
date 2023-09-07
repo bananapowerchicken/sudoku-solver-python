@@ -12,11 +12,6 @@ grid = [
     [0, 6, 4, 0, 0, 0, 0, 0, 0],
 ]
 
-
-
-# всего 2 ф-ии: 1 - возможно ли число в этой клетке
-#               2 - решатель с исп ф-ии 1
-
 # возможно ли число на входе в данной пустой клетке
 # на входе координаты в матрице и само число
 def is_possible(x, y, n) -> bool:
@@ -34,7 +29,7 @@ def is_possible(x, y, n) -> bool:
     # в range последнее указанное число не включительно
     # проверка каждого квадратного блока
     x_block_start = (x // 3)*3
-    y_block_start = (x // 3)*3
+    y_block_start = (y // 3)*3
     for X in range(x_block_start, x_block_start+3):
         for Y in range(y_block_start, y_block_start+3):
             if grid[X][Y] == n:
@@ -42,9 +37,32 @@ def is_possible(x, y, n) -> bool:
             
     return True
 
+def print_grid(grid):
+    for i in range(0, 9):
+        print(grid[i])
 
+
+# это точно рекурсивная функция
+# перерешивает судоку до победного
 def solve():
-    pass
+    global grid  # чтобы все изменения сохранялись глобально, а не только внутри ф-ии
+    for x in range(0, 9):
+        for y in range(0, 9):
+            if grid[x][y] == 0:
+                for n in range(1, 10):
+                    if is_possible(x, y, n):
+                        grid[x][y] = n
 
-for i in range(1, 10):
-    print(i, is_possible(0, 0, i))
+                        # print_grid(grid)
+                        # print('\n')
+                        
+                        solve()
+                        grid[x][y] = 0
+                return
+    print_grid(grid)
+# # тест на клетки
+# for i in range(1, 10):
+#     print(i, is_possible(0, 0, i))
+
+# тест решателя
+solve()
