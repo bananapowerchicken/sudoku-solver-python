@@ -24,7 +24,7 @@ pg.hotkey('enter')
 
 
 # тут должно быть распознавание цифр с сохраненной картинки
-
+# waksoft.susu.ru/2021/05/18/kak-s-pomoshhyu-python-raspoznat-tekst-v-izobrazheniyah/
 
 
 # для простоты удаляю судоку после решения
