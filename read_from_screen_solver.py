@@ -27,6 +27,6 @@ pg.hotkey('enter')
 # waksoft.susu.ru/2021/05/18/kak-s-pomoshhyu-python-raspoznat-tekst-v-izobrazheniyah/
 
 
-# для простоты удаляю судоку после решения
-time.sleep(10)
-os.remove(f'{name}.png')
+# # для простоты удаляю судоку после решения
+# time.sleep(10)
+# os.remove(f'{name}.png')
