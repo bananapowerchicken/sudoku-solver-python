@@ -1,3 +1,5 @@
+import pyautogui as pg
+import time
 # fixed grid to solve in unpretty interface
 
 # алгоритм: в ближайшую пустую ячейку подставляешь первое (по возрастанию)
@@ -27,15 +29,15 @@
 
 # expert
 grid = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 3, 0, 0, 0, 9, 0, 5, 0],
-    [0, 0, 9, 8, 2, 0, 0, 1, 3],
-    [1, 0, 7, 0, 9, 0, 0, 0, 0],
-    [3, 0, 0, 0, 0, 0, 0, 4, 5],
-    [0, 0, 0, 0, 0, 0, 0, 0, 6],
-    [0, 2, 0, 0, 7, 4, 0, 0, 0],
-    [0, 0, 0, 9, 0, 0, 0, 0, 0],
-    [0, 6, 0, 1, 0, 5, 4, 0, 0],
+    [0, 0, 1, 3, 0, 0, 0, 0, 0],
+    [0, 9, 0, 0, 2, 0, 0, 0, 0],
+    [0, 0, 8, 0, 0, 0, 0, 2, 6],
+    [0, 0, 0, 0, 0, 9, 0, 0, 5],
+    [0, 0, 0, 0, 0, 1, 8, 0, 9],
+    [0, 0, 0, 7, 3, 4, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 7, 0, 0],
+    [4, 7, 0, 0, 0, 0, 0, 9, 0],
+    [3, 0, 0, 0, 1, 0, 4, 0, 0],
 ]
 
 
@@ -64,9 +66,39 @@ def is_possible(x, y, n) -> bool:
             
     return True
 
+# сюда же заносим и печать на сайте
 def print_grid(grid):
+    # локальный вывод
     for i in range(0, 9):
         print(grid[i])
+
+    # вывод на сайте
+    final = []
+    str_final = []
+    for i in range(9):
+        final.append(grid[i])
+
+    for lists in final:
+        for num in lists:
+            str_final.append(str(num))
+    
+    counter = []
+
+    for num in str_final:
+        pg.press(num)
+        pg.hotkey('right')
+        counter.append(num)
+        if len(counter)%9 == 0:
+            pg.hotkey('down')
+            pg.hotkey('left')
+            pg.hotkey('left')
+            pg.hotkey('left')
+            pg.hotkey('left')
+            pg.hotkey('left')
+            pg.hotkey('left')
+            pg.hotkey('left')
+            pg.hotkey('left')
+
 
 
 # это точно рекурсивная функция
@@ -86,6 +118,7 @@ def solve():
                         solve()
                         grid[x][y] = 0
                 return
+    # time.sleep(2)
     print_grid(grid)
     print('\n')
 # # тест на клетки

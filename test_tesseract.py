@@ -67,7 +67,10 @@ def print_grid(grid):
 
 print_grid(grid)
 
-
+# распознавание
+# https://waksoft.susu.ru/2021/05/18/kak-s-pomoshhyu-python-raspoznat-tekst-v-izobrazheniyah/
+# обрезка
+# https://python-scripts.com/pillow-crop
 
 
 
