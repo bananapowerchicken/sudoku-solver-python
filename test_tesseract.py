@@ -27,33 +27,54 @@ grid = [
 # 4 - wrote this
 pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Anna\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 
-# читать изображение с помощью OpenCV
-# image = cv2.imread("test.jpg") # текст и цифры +
-# image = cv2.imread("test2.jpg") # цифры + 
-# image = cv2.imread("puzzle.png")  # с моим изображением на дурака не сработало)))
+# # разбираем больную 9
+# image = cv2.imread("9.png")
+# img = Image.open("9.png")
+# im_crop = img.crop((0, 10, 220, 220))
+# im_crop.save('cropped.png', quality=95)
+# image = cv2.imread("cropped.png")
+        
+# string = pytesseract.image_to_string(image, config='-c tessedit_char_whitelist=123456789 --psm 6')
+# print(string)
+        
+
+
+
 
 img = Image.open("puzzle.png") # size 2000 * 2000
 
-step = 220
+step = 220 # ~2000//9
 for y in range(0, 9):    
     for x in range(0, 9):
         x0 = x * step
         y0 = y * step
-        im_crop = img.crop((x0, y0, x0 + step, y0 + step))
+        im_crop = img.crop((x0, y0 + 10, x0 + step, y0 + step))
         im_crop.save('cropped.png', quality=95)
         image = cv2.imread("cropped.png")
-        string = pytesseract.image_to_string(image, lang='eng',config='-c tessedit_char_whitelist=123456789 --psm 6')
-        # print(string)
         
+        string = pytesseract.image_to_string(image, config='-c tessedit_char_whitelist=123456789 --psm 6')
+        print(string)
+        
+    # if string == "17":a
+
         if string != "":
             # string = string[-1:]
-            grid[y][x] = int(string)
+            grid[y][x] = int(string) % 10  # топорно решаем рпоблему 17
 
 def print_grid(grid):
     for i in range(0, 9):
         print(grid[i])
 
 print_grid(grid)
+
+
+
+
+
+
+
+
+
 # im_crop = img.crop((0, 0, 660, 220))
 # # im_crop.show()
 # im_crop.save('cropped.png', quality=95)
