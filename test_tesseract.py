@@ -36,10 +36,28 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Anna\AppData\Local\Programs\T
         
 # string = pytesseract.image_to_string(image, config='-c tessedit_char_whitelist=123456789 --psm 6')
 # print(string)
+
+
+# # разбираем больную 7 - отдельно распознается
+# image = cv2.imread("7.png")
+# img = Image.open("7.png")
+# im_crop = img.crop((0, 10, 220, 220))
+# im_crop.save('cropped.png', quality=95)
+# image = cv2.imread("cropped.png")
         
+# string = pytesseract.image_to_string(image, config='-c tessedit_char_whitelist=123456789 --psm 6')
+# print(string)
 
 
-
+# # разбираем больную 4 - отдельно распознается
+# image = cv2.imread("4.png")
+# img = Image.open("4.png")
+# im_crop = img.crop((0, 0, 220, 220))
+# im_crop.save('cropped.png', quality=95)
+# image = cv2.imread("cropped.png")
+        
+# string = pytesseract.image_to_string(image, config='-c tessedit_char_whitelist=123456789 --psm 6')
+# print(string)
 
 img = Image.open("puzzle.png") # size 2000 * 2000
 
@@ -48,7 +66,8 @@ for y in range(0, 9):
     for x in range(0, 9):
         x0 = x * step
         y0 = y * step
-        im_crop = img.crop((x0, y0 + 10, x0 + step, y0 + step))
+        im_crop = img.crop((x0 + 15, y0 + 15, x0 + step - 15, y0 + step - 15))
+        im_crop = im_crop.crop((0, 0, 200, 200))
         im_crop.save('cropped.png', quality=95)
         image = cv2.imread("cropped.png")
         
@@ -66,6 +85,10 @@ def print_grid(grid):
         print(grid[i])
 
 print_grid(grid)
+
+
+
+
 
 # распознавание
 # https://waksoft.susu.ru/2021/05/18/kak-s-pomoshhyu-python-raspoznat-tekst-v-izobrazheniyah/

@@ -17,9 +17,9 @@ pg.hotkey('down')
 pg.hotkey('enter')
 
 # теперь нужно названия файла ввести - как-то он странно вводится - теряет постепенно первые буквы
-time.sleep(2)
+time.sleep(5)
 name = 'puzzle'
-pg.typewrite(name, 0.5)
+pg.typewrite(name, 0.25)
 pg.hotkey('enter')
 
 
