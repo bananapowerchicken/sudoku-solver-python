@@ -24,3 +24,4 @@ time.sleep(1)
 solve(grid)
 
 os.remove('puzzle.png')
+os.remove('cropped.png')

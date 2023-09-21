@@ -32,6 +32,7 @@ def download_img(current_folder_addr: str):
 def get_data(grid):
     pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Anna\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 
+    # TODO get rid of the hardcoded img name
     img = Image.open("puzzle.png") # size 2000 * 2000
 
     step = 220 # TODO put away the hardcode 2000/9
@@ -49,6 +50,8 @@ def get_data(grid):
 
             if string != "":
                 grid[y][x] = int(string)
+    
+    print('Numbers from the image recognised')
 
 # check if n-num is possible for the current cell
 def is_possible(grid, x, y, n) -> bool:   
@@ -116,4 +119,6 @@ def solve(grid):
 
     print_grid(grid)
     print('\n')
+
+    print('Sudoku solved')
 
