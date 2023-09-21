@@ -16,6 +16,30 @@ from PIL import Image
 #     [0, 0, 0, 0, 0, 0, 0, 0, 0],
 # ]
 
+# ввести адрес нужной папки и сохранить туда картинку
+def download_img_to_certain_folder(adress):
+    time.sleep(2)
+    pg.click()
+    pg.rightClick()
+    pg.hotkey('down')
+    pg.hotkey('enter')
+    
+    time.sleep(5)
+    img_name = 'puzzle'
+    pg.typewrite(img_name, 0.25)
+
+
+    with pg.hold('ctrl'):
+        pg.press('l')
+    pg.typewrite(adress, 0.05)
+    pg.hotkey('enter')
+
+    time.sleep(1)
+    pg.hotkey('enter')
+    # pg.typewrite(img_name, 0.25)
+    # pg.hotkey('enter')
+    # print('Image downloaded')
+
 # нажать ЛКМ на 1-ую ячейку судоку в браузере
 def download_img():
     time.sleep(2)
