@@ -4,20 +4,8 @@ import pytesseract
 import cv2
 from PIL import Image
 
-# grid = [
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-# ]
-
-# ввести адрес нужной папки и сохранить туда картинку
-def download_img_to_certain_folder(adress):
+# put the addr of the current folder to save sudoku img here
+def download_img(current_folder_addr: str):
     time.sleep(2)
     pg.click()
     pg.rightClick()
@@ -26,46 +14,32 @@ def download_img_to_certain_folder(adress):
     
     time.sleep(5)
     img_name = 'puzzle'
-    pg.typewrite(img_name, 0.25)
+    pg.typewrite(img_name, 0.05)
 
 
     with pg.hold('ctrl'):
         pg.press('l')
-    pg.typewrite(adress, 0.05)
+    pg.typewrite(current_folder_addr, 0.05)
     pg.hotkey('enter')
 
     time.sleep(1)
     pg.hotkey('enter')
-    # pg.typewrite(img_name, 0.25)
-    # pg.hotkey('enter')
-    # print('Image downloaded')
 
-# нажать ЛКМ на 1-ую ячейку судоку в браузере
-def download_img():
-    time.sleep(2)
-    pg.click()
-    pg.rightClick()
-    pg.hotkey('down')
-    pg.hotkey('enter')
-    
-    time.sleep(5)
-    img_name = 'puzzle'
-    pg.typewrite(img_name, 0.25)
-    pg.hotkey('enter')
     print('Image downloaded')
 
+# TODO independent way to recognise - comparison with reference
+# recognise numbers from the downloaded img
 def get_data(grid):
     pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Anna\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 
-    # global grid
     img = Image.open("puzzle.png") # size 2000 * 2000
 
-    step = 220 # ~2000//9
+    step = 220 # TODO put away the hardcode 2000/9
     for y in range(0, 9):    
         for x in range(0, 9):
             x0 = x * step
             y0 = y * step
-            im_crop = img.crop((x0 + 15, y0 + 15, x0 + step - 15, y0 + step - 15))
+            im_crop = img.crop((x0 + 15, y0 + 15, x0 + step - 15, y0 + step - 15)) # TODO no hardcode
             im_crop = im_crop.crop((0, 0, 200, 200))
             im_crop.save('cropped.png', quality=95)
             image = cv2.imread("cropped.png")
@@ -76,6 +50,7 @@ def get_data(grid):
             if string != "":
                 grid[y][x] = int(string)
 
+# check if n-num is possible for the current cell
 def is_possible(grid, x, y, n) -> bool:   
     for row in range(0, 9):
         if grid[row][y] == n:
@@ -96,11 +71,11 @@ def is_possible(grid, x, y, n) -> bool:
     return True
 
 def print_grid(grid):
-    # локальный вывод
+    # terminal output
     for i in range(0, 9):
         print(grid[i])
 
-    # вывод на сайте
+    # input in the site sudoku.com
     final = []
     str_final = []
     for i in range(9):
@@ -127,8 +102,8 @@ def print_grid(grid):
             pg.hotkey('left')
             pg.hotkey('left')
 
-def solve(grid):
-    # global grid  # чтобы все изменения сохранялись глобально, а не только внутри ф-ии
+# solving sudoku algo
+def solve(grid):    
     for x in range(0, 9):
         for y in range(0, 9):
             if grid[x][y] == 0:

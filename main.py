@@ -29,3 +29,7 @@ grid = [
 # D:\code\sudoku-solver-python - путь нужной мне папки
 adress = 'D:\code\sudoku-solver-python'
 download_img_to_certain_folder(adress)
+time.sleep(10)
+get_data(grid)
+time.sleep(1)
+solve(grid)
