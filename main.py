@@ -1,6 +1,6 @@
 import time
 import os
-from utils import download_img, get_data, solve, download_img_to_certain_folder
+from utils import get_data, solve, download_img
 
 
 grid = [
@@ -17,7 +17,7 @@ grid = [
 
 # D:\code\sudoku-solver-python - needed path to the curr folder
 adress = 'D:\code\sudoku-solver-python'
-download_img_to_certain_folder(adress)
+download_img(adress)
 time.sleep(10)
 get_data(grid)
 time.sleep(1)
