@@ -1,6 +1,6 @@
 # sudoku-solver-python
 
-Instruction to how run the code.
+Instruction how to run the code.
 
 1. Clone the repository
 2. Install pytesseract library.

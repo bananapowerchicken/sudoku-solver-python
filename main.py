@@ -15,7 +15,7 @@ grid = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
 ]
 
-# D:\code\sudoku-solver-python - needed path to the curr folder
+# Here type your folder addressgit 
 curr_fold_address = 'D:\code\sudoku-solver-python'
 download_img(curr_fold_address)
 time.sleep(10)

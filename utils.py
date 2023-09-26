@@ -4,7 +4,7 @@ import pytesseract
 import cv2
 from PIL import Image
 
-# put the addr of the current folder to save sudoku img here
+
 def download_img(current_folder_addr: str):
     time.sleep(2)
     pg.click()
@@ -96,14 +96,8 @@ def print_grid(grid):
         counter.append(num)
         if len(counter)%9 == 0:
             pg.hotkey('down')
-            pg.hotkey('left')
-            pg.hotkey('left')
-            pg.hotkey('left')
-            pg.hotkey('left')
-            pg.hotkey('left')
-            pg.hotkey('left')
-            pg.hotkey('left')
-            pg.hotkey('left')
+            for i in range(8):
+                pg.hotkey('left')
 
 # solving sudoku algo
 def solve(grid):    
