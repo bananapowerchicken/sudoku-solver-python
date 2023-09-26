@@ -17,11 +17,13 @@ grid = [
 # print(len(grid))
 # Here type your folder addressgit 
 curr_fold_address = 'D:\code\sudoku-solver-python'
+img_name = 'puzzle'
+
 download_img(curr_fold_address)
 time.sleep(10)
-get_data(grid)
+get_data(grid, img_name)
 time.sleep(1)
 solve(grid)
 
-os.remove('puzzle.png')
+os.remove(f'{img_name}.png')
 os.remove('cropped.png')

@@ -29,12 +29,14 @@ def download_img(current_folder_addr: str):
 
 # TODO independent way to recognise - comparison with reference
 # recognise numbers from the downloaded img
-def get_data(grid):
+def get_data(grid: list, img_name: str):
     pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Anna\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 
     # TODO get rid of the hardcoded img name
-    img = Image.open("puzzle.png") # size 2000 * 2000
+    img = Image.open(f'{img_name}.png') # size 2000 * 2000
 
+    # TODO: fix problem with fragile setting of sizes - it's too complex
+    # maybe this will be finished with the new recognising way
     step = 220 # TODO put away the hardcode 2000/9
     side_crop = 15
     grid_size = len(grid)
