@@ -36,11 +36,13 @@ def get_data(grid):
     img = Image.open("puzzle.png") # size 2000 * 2000
 
     step = 220 # TODO put away the hardcode 2000/9
-    for y in range(0, 9):    
-        for x in range(0, 9):
+    side_crop = 15
+    grid_size = len(grid)
+    for y in range(0, grid_size):    
+        for x in range(0, grid_size):
             x0 = x * step
             y0 = y * step
-            im_crop = img.crop((x0 + 15, y0 + 15, x0 + step - 15, y0 + step - 15)) # TODO no hardcode
+            im_crop = img.crop((x0 + side_crop, y0 + side_crop, x0 + step - side_crop, y0 + step - side_crop))
             im_crop = im_crop.crop((0, 0, 200, 200))
             im_crop.save('cropped.png', quality=95)
             image = cv2.imread("cropped.png")
@@ -55,33 +57,38 @@ def get_data(grid):
 
 # check if n-num is possible for the current cell
 def is_possible(grid, x, y, n) -> bool:   
-    for row in range(0, 9):
+    grid_size = len(grid)
+    block_size = grid_size / 3
+    for row in range(0, grid_size):
         if grid[row][y] == n:
             return False
     
 
-    for col in range(0, 9):
+    for col in range(0, grid_size):
         if grid[x][col] == n:
             return False
 
-    x_block_start = (x // 3)*3
-    y_block_start = (y // 3)*3
-    for X in range(x_block_start, x_block_start+3):
-        for Y in range(y_block_start, y_block_start+3):
+    x_block_start = (x // block_size)*block_size
+    y_block_start = (y // block_size)*block_size
+    for X in range(x_block_start, x_block_start+block_size):
+        for Y in range(y_block_start, y_block_start+block_size):
             if grid[X][Y] == n:
                 return False
             
     return True
 
 def print_grid(grid):
+
+    grid_size = len(grid)
+
     # terminal output
-    for i in range(0, 9):
+    for i in range(0, grid_size):
         print(grid[i])
 
     # input in the site sudoku.com
     final = []
     str_final = []
-    for i in range(9):
+    for i in range(grid_size):
         final.append(grid[i])
 
     for lists in final:
@@ -94,17 +101,18 @@ def print_grid(grid):
         pg.press(num)
         pg.hotkey('right')
         counter.append(num)
-        if len(counter)%9 == 0:
+        if len(counter)%grid_size== 0:
             pg.hotkey('down')
-            for i in range(8):
+            for i in range(grid_size - 1):
                 pg.hotkey('left')
 
 # solving sudoku algo
-def solve(grid):    
-    for x in range(0, 9):
-        for y in range(0, 9):
+def solve(grid):
+    grid_size = len(grid)
+    for x in range(0, grid_size):
+        for y in range(0, grid_size):
             if grid[x][y] == 0:
-                for n in range(1, 10):
+                for n in range(1, grid_size+1):
                     if is_possible(grid, x, y, n):
                         grid[x][y] = n                        
                         solve(grid)

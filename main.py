@@ -14,7 +14,7 @@ grid = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
 ]
-
+# print(len(grid))
 # Here type your folder addressgit 
 curr_fold_address = 'D:\code\sudoku-solver-python'
 download_img(curr_fold_address)
