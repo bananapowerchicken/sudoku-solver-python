@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# custom ignore images
+cropped.png
+puzzle.png
+
 # C extensions
 *.so
 
