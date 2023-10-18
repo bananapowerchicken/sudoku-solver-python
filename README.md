@@ -15,4 +15,4 @@ Instruction how to run the code.
 11. Instantly move your mouse pointer to the first cell of the puzzle (upper-left)
 12. Wait until the puzzle will be solved.
 
-[Demo video - you should probably download it to watch](https://github.com/bananapowerchicken/sudoku-solver-python/blob/main/video-demo-sudoku-solver.MP4)
+[Demo video - you should probably download it to watch by tapping "View raw"](https://github.com/bananapowerchicken/sudoku-solver-python/blob/main/video-demo-sudoku-solver.MP4)
