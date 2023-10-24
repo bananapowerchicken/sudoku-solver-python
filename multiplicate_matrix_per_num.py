@@ -1,8 +1,9 @@
-import numpy as np
+# import numpy as np
 from PIL import Image
 
-img1 = Image.open('1.png') # Открываем первое изображение
-img2 = Image.open('9.png') # Открываем первое изображение
+
+img1 = Image.open('num_templates/1.png') # Открываем первое изображение
+img2 = Image.open('num_templates/1_blue.png') # Открываем первое изображение
 im1 = img1.load() # Загружаем первое изображение для доступа к пикселям
 im2 = img2.load() # Загружаем первое изображение для доступа к пикселям
 

@@ -1,7 +1,7 @@
 import pyautogui as pg
 import time
-import pytesseract
-import cv2
+# import pytesseract
+# import cv2
 from PIL import Image
 
 
@@ -30,7 +30,7 @@ def download_img(current_folder_addr: str):
 # TODO independent way to recognise - comparison with reference
 # recognise numbers from the downloaded img
 def get_data(grid: list, img_name: str):
-    pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Anna\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
+    # pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Anna\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 
     # TODO get rid of the hardcoded img name
     img = Image.open(f'{img_name}.png') # size 2000 * 2000
