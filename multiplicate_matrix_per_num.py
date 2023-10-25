@@ -3,11 +3,11 @@ from PIL import Image
 
 # intense_blue = (187, 222, 251, 255)
 # blue = (226, 235, 243, 255)
-# adjacent_blue = ?
+# adjacent_blue = (195, 215, 234, 255)
 # white(main) = (255, 255, 255, 255)
 
-img1 = Image.open('1.png') # Открываем первое изображение
-img2 = Image.open('1_blue.png') # Открываем первое изображение
+img1 = Image.open('num_templates/1.png') # Открываем первое изображение
+img2 = Image.open('num_templates/adjacent.png') # Открываем первое изображение
 # im1 = img1.load() # Загружаем первое изображение для доступа к пикселям
 # im2 = img2.load() # Загружаем первое изображение для доступа к пикселям
 
@@ -46,14 +46,4 @@ def change_pixels(img, pixel_orig: tuple, pixel_final: tuple):
     img.save('changed.png', quality=95)
 
 comparison_per_pixel(img1, img2)
-change_pixels(img2, (226, 235, 243, 255), (255, 255, 255, 255))
-
-# # скалярное произведение матриц одного размера(изображений)
-# res = 1
-# for x in range(0,x1):
-#     for y in range(0,y1):
-#         # print(im1[x, y])
-#         tmp = im1[x, y] * im2[x, y]
-#         res *= tmp
-
-# print(res)
+# change_pixels(img2, (226, 235, 243, 255), (255, 255, 255, 255))
