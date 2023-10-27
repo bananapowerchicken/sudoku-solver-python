@@ -32,15 +32,15 @@ def compare_per_pixel(img1, img2):
                     # с пикселем второй картинки по координатах [x,y], тогда:
                     i = i + 1 # Увеличиваем счетчик на 1
                     # print(f'Координаты: x={x}, y={y} Изображение 1={im1[x,y]} - Изображение 2={im2[x,y]}')
-        print(f"Количество разных пикселей: {i}")
-        print(f"Всего пикселей: {total_pixels_num}")
+        # print(f"Количество разных пикселей: {i}")
+        # print(f"Всего пикселей: {total_pixels_num}")
          # пороговое условие пока от балды:
         # if i <= total_pixels_num * 0.2:
         if i < 2000:
             is_equal = True 
     else:
         print("Размеры изображений не совпадают!")
-    print(is_equal)
+    # print(is_equal)
     return is_equal
 
 # на входе одна картинка c любым фоном
@@ -51,7 +51,7 @@ def recognise_num(img):
         im = change_background(img, im[0, 0])
     for i in range(1, 10):
         img_template = Image.open(f'num_templates/{i}.png')
-        print(i)
+        # print(i)
         if compare_per_pixel(im, img_template):
             num = i
             return num
@@ -92,6 +92,12 @@ def get_nums(grid: list, img_name: str):
 # test_img2 = Image.open('num_templates/7_blue.png') # не распозналось на 1000, + на 2000
 # test_img2 = Image.open('num_templates/8_blue.png') # не распозналось на 1000, + на 2000
 # test_img2 = Image.open('num_templates/9_blue.png') # + на 2000
-res = recognise_num(test_img2)
+
+for i in range(1, 10):
+    test_img = Image.open(f'num_templates/{i}_blue.png')
+    res = recognise_num(test_img)
+    print(res)
+
+# res = recognise_num(test_img2)
 # changed_background.save('changed_background.png', quality=95)
-print(res)
+# print(res)
