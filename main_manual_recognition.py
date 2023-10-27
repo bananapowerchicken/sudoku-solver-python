@@ -98,6 +98,11 @@ for i in range(1, 10):
     res = recognise_num(test_img)
     print(res)
 
+for i in range(1, 10):
+    test_img = Image.open(f'num_templates/{i}_intense_blue.png')
+    res = recognise_num(test_img)
+    print(res)
+
 # res = recognise_num(test_img2)
 # changed_background.save('changed_background.png', quality=95)
 # print(res)
