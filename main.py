@@ -31,5 +31,6 @@ img_name = 'puzzle'
 # os.remove('cropped.png')
 
 # without the pytesseract
-download_img(curr_fold_address)
-time.sleep(10)
+
+# 1 - get the whole puzzle
+

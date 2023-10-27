@@ -36,7 +36,7 @@ def comparison_per_pixel(img1, img2):
     else:
         print("Размеры изображений не совпадают!")
 
-def change_pixels(img, pixel_orig: tuple, pixel_final: tuple):
+def change_pixels(img, pixel_orig: tuple, pixel_final: tuple):1
     im = img.load()
     x1, y1 = img.size
     for x in range(0, x1):
