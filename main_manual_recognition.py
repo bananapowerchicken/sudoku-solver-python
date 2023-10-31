@@ -17,6 +17,17 @@ grid = [
 # на входе одна картинка c любым фоном
 # на выходе распознанное числоgit
 def recognise_num(img):
+    threshhold_dict = {
+        0: 1800,
+        1: 1000,
+        2: 1800,
+        3: 1800,
+        4: 1800,
+        5: 1800,
+        6: 1800,
+        7: 1800,
+        8: 1800,
+        9: 1800,}
     im = img.load()    
     if im[0, 0] != (255, 255, 255, 255):
         im = change_background(img, im[0, 0])
@@ -24,14 +35,13 @@ def recognise_num(img):
         im = img
     for i in range(0, 10):
         img_template = Image.open(f'num_templates/{i}.png')
-        pixel_threshhold = 1800
+        pixel_threshhold = threshhold_dict[i]
+        # print(pixel_threshhold)
         res = compare_per_pixel(im, img_template, pixel_threshhold)
-        if i == 0:
-            pixel_threshhold = 1000
-            res = compare_per_pixel(im, img_template, pixel_threshhold)
+        
         
         if res:
-            print(i, res)
+            # print(i, res)
             num = i
             return num
 
@@ -63,10 +73,10 @@ def get_nums(grid: list, img_name: str):
 # # # tests
 
 
-# for i in range(0, 10):
-#     test_img = Image.open(f'num_templates/{i}_blue.png')
-#     res = recognise_num(test_img)
-#     print(res)
+for i in range(0, 10):
+    test_img = Image.open(f'num_templates/{i}_blue.png')
+    res = recognise_num(test_img)
+    print(res)
 
 # for i in range(0, 10):
 #     test_img = Image.open(f'num_templates/{i}_intense_blue.png')
@@ -75,5 +85,5 @@ def get_nums(grid: list, img_name: str):
 
 
 
-get_nums(grid, 'puzzle')
+# get_nums(grid, 'puzzle')
 print('end')
