@@ -1,5 +1,5 @@
 from PIL import Image
-from utils import change_background
+from utils import change_background, compare_per_pixel
 
 grid = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -15,16 +15,20 @@ grid = [
 
 
 # на входе одна картинка c любым фоном
-# на выходе распознанное число
+# на выходе распознанное числоgit
 def recognise_num(img):
-    im = img.load()
+    im = img.load()    
     if im[0, 0] != (255, 255, 255, 255):
         im = change_background(img, im[0, 0])
     else:
         im = img
     for i in range(0, 10):
         img_template = Image.open(f'num_templates/{i}.png')
-        res = compare_per_pixel(im, img_template)
+        pixel_threshhold = 1800
+        res = compare_per_pixel(im, img_template, pixel_threshhold)
+        if i == 0:
+            pixel_threshhold = 1000
+            res = compare_per_pixel(im, img_template, pixel_threshhold)
         
         if res:
             print(i, res)
@@ -59,15 +63,15 @@ def get_nums(grid: list, img_name: str):
 # # # tests
 
 
-# for i in range(1, 10):
+# for i in range(0, 10):
 #     test_img = Image.open(f'num_templates/{i}_blue.png')
 #     res = recognise_num(test_img)
 #     print(res)
 
-# # for i in range(1, 10):
-# #     test_img = Image.open(f'num_templates/{i}_intense_blue.png')
-# #     res = recognise_num(test_img)
-# #     print(res)
+# for i in range(0, 10):
+#     test_img = Image.open(f'num_templates/{i}_intense_blue.png')
+#     res = recognise_num(test_img)
+#     print(res)
 
 
 

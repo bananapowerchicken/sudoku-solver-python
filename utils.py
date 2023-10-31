@@ -136,10 +136,10 @@ def change_background(img, background_color:tuple):
     
     return img
 
-def compare_per_pixel(img1, img2):
+def compare_per_pixel(img1, img2, pixel_threshhold):
     is_equal = False
     not_equal_pixels_num = 0
-    pixel_threshhold = 2000
+    # pixel_threshhold = 1800
 
     # from PIL-fromat to pixels
     im1 = img1.load()
