@@ -126,3 +126,12 @@ def solve(grid):
 
     print('Sudoku solved')
 
+def change_background(img, background_color:tuple):
+    x1,y1 = img.size
+    im = img.load()
+    for x in range(0,x1):
+        for y in range(0,y1):
+            if im[x,y] == background_color: 
+                im[x,y] = (255, 255, 255, 255)
+    
+    return img

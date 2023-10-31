@@ -1,5 +1,5 @@
 from PIL import Image
-from utils import print_grid
+from utils import change_background
 
 grid = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -12,48 +12,27 @@ grid = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
 ]
-# get the whole puzzle
-
-# recognise the numbers
-
-def change_background(img, background_color:tuple):
-    x1,y1 = img.size
-    im = img.load()
-    for x in range(0,x1):
-        for y in range(0,y1):
-            if im[x,y] == background_color: 
-                im[x,y] = (255, 255, 255, 255)
-    
-    return img
 
 def compare_per_pixel(img1, img2):
     is_equal = False
+    not_equal_pixels_num = 0
+    pixel_threshhold = 2000
 
-    im1 = img1.load() # Загружаем первое изображение для доступа к пикселям
-    # im1 = img1
-    im2 = img2.load() # Загружаем первое изображение для доступа к пикселям
-    i = 0 # Счетчик пикселей, которые не совпадают
+    # from PIL-fromat to pixels
+    im1 = img1.load()
+    im2 = img2.load()
 
-    if (img1.size == img2.size): # Проверяем, что размер изображений совпадают
-        x1,y1 = img1.size # Через атрибут size получаем кортеж с двумя элементами (размер изображения по x и y)
-        total_pixels_num = x1 * y1
-        # Проходимся последовательно по каждому пикселю картинок
+    if (img1.size == img2.size):
+        x1, y1 = img1.size
+        # comparing every pixel
         for x in range(0,x1):
             for y in range(0,y1):
-                if im1[x,y] != im2[x,y]: # Если пиксель первой картинки по координатах [x,y] не совпадает
-                    # с пикселем второй картинки по координатах [x,y], тогда:
-                    i = i + 1 # Увеличиваем счетчик на 1
-                    # print(f'Координаты: x={x}, y={y} Изображение 1={im1[x,y]} - Изображение 2={im2[x,y]}')
-        # print(f"Количество разных пикселей: {i}")
-        # print(f"Всего пикселей: {total_pixels_num}")
-         # пороговое условие пока от балды:
-        # if i <= total_pixels_num * 0.2:
-        # придуманный порог
-        if i < 3000:
+                if im1[x,y] != im2[x,y]:
+                    not_equal_pixels_num += 1
+        if not_equal_pixels_num < pixel_threshhold:
             is_equal = True 
     else:
-        print("Размеры изображений не совпадают!")
-    # print(is_equal)
+        print("Image sizes are not equal!")
     return is_equal
 
 # на входе одна картинка c любым фоном
