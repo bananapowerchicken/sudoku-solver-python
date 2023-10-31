@@ -1,13 +1,24 @@
 from PIL import Image
+from utils import print_grid
 
+grid = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+]
 # get the whole puzzle
 
 # recognise the numbers
 
 def change_background(img, background_color:tuple):
-    x1,y1 = img.size # Через атрибут size получаем кортеж с двумя элементами (размер изображения по x и y)
+    x1,y1 = img.size
     im = img.load()
-    # Проходимся последовательно по каждому пикселю картинок
     for x in range(0,x1):
         for y in range(0,y1):
             if im[x,y] == background_color: 
@@ -19,6 +30,7 @@ def compare_per_pixel(img1, img2):
     is_equal = False
 
     im1 = img1.load() # Загружаем первое изображение для доступа к пикселям
+    # im1 = img1
     im2 = img2.load() # Загружаем первое изображение для доступа к пикселям
     i = 0 # Счетчик пикселей, которые не совпадают
 
@@ -36,7 +48,8 @@ def compare_per_pixel(img1, img2):
         # print(f"Всего пикселей: {total_pixels_num}")
          # пороговое условие пока от балды:
         # if i <= total_pixels_num * 0.2:
-        if i < 2000:
+        # придуманный порог
+        if i < 3000:
             is_equal = True 
     else:
         print("Размеры изображений не совпадают!")
@@ -49,10 +62,14 @@ def recognise_num(img):
     im = img.load()
     if im[0, 0] != (255, 255, 255, 255):
         im = change_background(img, im[0, 0])
-    for i in range(1, 10):
+    else:
+        im = img
+    for i in range(0, 10):
         img_template = Image.open(f'num_templates/{i}.png')
-        # print(i)
-        if compare_per_pixel(im, img_template):
+        res = compare_per_pixel(im, img_template)
+        
+        if res:
+            print(i, res)
             num = i
             return num
 
@@ -72,6 +89,7 @@ def get_nums(grid: list, img_name: str):
             im_crop = img.crop((x0 + side_crop, y0 + side_crop, x0 + step - side_crop, y0 + step - side_crop))
             im_crop = im_crop.crop((0, 0, 200, 200))
             im_crop.save('cropped.png', quality=95) # для контроля
+            im_crop = Image.open('cropped.png')
             num = recognise_num(im_crop)
 
             if num != 0:
@@ -80,29 +98,20 @@ def get_nums(grid: list, img_name: str):
     print('Numbers from the image recognised')
 
 
-# tests
+# # # tests
 
 
-# test_img2 = Image.open('num_templates/1_blue.png') # + на 2000
-# test_img2 = Image.open('num_templates/2_blue.png') # + на 2000
-# test_img2 = Image.open('num_templates/3_blue.png') # + на 2000
-# test_img2 = Image.open('num_templates/4_blue.png') # не распозналось на 1000, + на 2000
-# test_img2 = Image.open('num_templates/5_blue.png') # не распозналось на 1000, + на 2000
-# test_img2 = Image.open('num_templates/6_blue.png') # не распозналось на 1000, + на 2000
-# test_img2 = Image.open('num_templates/7_blue.png') # не распозналось на 1000, + на 2000
-# test_img2 = Image.open('num_templates/8_blue.png') # не распозналось на 1000, + на 2000
-# test_img2 = Image.open('num_templates/9_blue.png') # + на 2000
+# for i in range(1, 10):
+#     test_img = Image.open(f'num_templates/{i}_blue.png')
+#     res = recognise_num(test_img)
+#     print(res)
 
-for i in range(1, 10):
-    test_img = Image.open(f'num_templates/{i}_blue.png')
-    res = recognise_num(test_img)
-    print(res)
+# # for i in range(1, 10):
+# #     test_img = Image.open(f'num_templates/{i}_intense_blue.png')
+# #     res = recognise_num(test_img)
+# #     print(res)
 
-for i in range(1, 10):
-    test_img = Image.open(f'num_templates/{i}_intense_blue.png')
-    res = recognise_num(test_img)
-    print(res)
 
-# res = recognise_num(test_img2)
-# changed_background.save('changed_background.png', quality=95)
-# print(res)
+
+get_nums(grid, 'puzzle')
+print('end')
