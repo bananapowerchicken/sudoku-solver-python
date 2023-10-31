@@ -135,3 +135,25 @@ def change_background(img, background_color:tuple):
                 im[x,y] = (255, 255, 255, 255)
     
     return img
+
+def compare_per_pixel(img1, img2):
+    is_equal = False
+    not_equal_pixels_num = 0
+    pixel_threshhold = 2000
+
+    # from PIL-fromat to pixels
+    im1 = img1.load()
+    im2 = img2.load()
+
+    if (img1.size == img2.size):
+        x1, y1 = img1.size
+        # comparing every pixel
+        for x in range(0,x1):
+            for y in range(0,y1):
+                if im1[x,y] != im2[x,y]:
+                    not_equal_pixels_num += 1
+        if not_equal_pixels_num < pixel_threshhold:
+            is_equal = True 
+    else:
+        print("Image sizes are not equal!")
+    return is_equal
