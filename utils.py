@@ -134,6 +134,8 @@ def change_background(img, background_color:tuple):
             if im[x,y] == background_color: 
                 im[x,y] = (255, 255, 255, 255)
     
+    im.save('white.png', quality=95)
+    
     return img
 
 def compare_per_pixel(img1, img2, pixel_threshhold):

@@ -18,7 +18,7 @@ grid = [
 # на выходе распознанное числоgit
 def recognise_num(img):
     threshhold_dict = {
-        1: 1000,
+        1: 900,
         0: 1800,
         # 1: 1000,
         2: 1800,
@@ -66,6 +66,8 @@ def get_nums(grid: list, img_name: str):
             im_crop.save('cropped.png', quality=95) # для контроля
             im_crop = Image.open('cropped.png')
             num = recognise_num(im_crop)
+            print(num)
+            print('----------')
 
             if num != 0:
                 grid[y][x] = num
@@ -82,11 +84,11 @@ for i in range(0, 10):
     print(res)
 
 # for i in range(0, 10):
-#     test_img = Image.open(f'num_templates/{i}_intense_blue.png')
-#     res = recognise_num(test_img)
-#     print(res)
+    # test_img = Image.open(f'num_templates/{i}_intense_blue.png')
+    # res = recognise_num(test_img)
+    # print(res)
 
 
 
-# get_nums(grid, 'puzzle')
+get_nums(grid, 'puzzle')
 print('end')
