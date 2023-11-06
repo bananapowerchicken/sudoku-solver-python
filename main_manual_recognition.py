@@ -18,8 +18,9 @@ grid = [
 # на выходе распознанное числоgit
 def recognise_num(img):
     threshhold_dict = {
-        0: 1800,
         1: 1000,
+        0: 1800,
+        # 1: 1000,
         2: 1800,
         3: 1800,
         4: 1800,
@@ -33,7 +34,9 @@ def recognise_num(img):
         im = change_background(img, im[0, 0])
     else:
         im = img
-    for i in range(0, 10):
+    # for i in range(0, 10):
+    # switching keys
+    for i in threshhold_dict:
         img_template = Image.open(f'num_templates/{i}.png')
         pixel_threshhold = threshhold_dict[i]
         # print(pixel_threshhold)
