@@ -92,3 +92,6 @@ for i in range(0, 10):
 
 get_nums(grid, 'puzzle')
 print('end')
+
+for i in range(0, grid_size):
+        print(grid[i])

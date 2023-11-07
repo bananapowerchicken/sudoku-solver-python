@@ -58,21 +58,67 @@ num_pixel = {
 
 # print(total_num)
 
-def recognise_num(pixels):
+def compare_per_pixel(img1, img2, threshold):
+    is_equal = False
+    not_equal_pixels_num = 0
+    # pixel_threshhold = 1000
+
+    # from PIL-fromat to pixels
+    pixels1 = img1.load()
+    pixels2 = img2.load()
+
+    if (img1.size == img2.size):
+        x1, y1 = img1.size
+        # comparing every pixel
+        for x in range(0,x1):
+            for y in range(0,y1):
+                if pixels1[x,y] != pixels2[x,y]:
+                    not_equal_pixels_num += 1
+        print(not_equal_pixels_num, threshold)
+        if not_equal_pixels_num <= threshold:
+            is_equal = True 
+    else:
+        print("Image sizes are not equal!")
+    return is_equal
+    
+
+def recognise_num(img):
     num_pixels_amount = 0
     # pixels = img.load()
 
-    for x in range(100):
-        for y in range(130):
-            if pixels[x,y] == num_color:
-                num_pixels_amount+=1
+    # for x in range(100):
+    #     for y in range(130):
+    #         if pixels[x,y] == num_color:
+    #             num_pixels_amount+=1
     
-    for i in num_pixel.keys():
-        print(num_pixels_amount, num_pixel[i])
-        if num_pixels_amount == 0:
-            return 0
-        if num_pixels_amount >= num_pixel[i]:
-            return i + 1
+    # for i in num_pixel.keys():
+    #     print(num_pixels_amount, num_pixel[i])
+    #     if num_pixels_amount == 0:
+    #         return 0
+    #     if num_pixels_amount >= num_pixel[i]:
+    #         return i + 1
+
+    # compare with templates
+    threshold = 1300 #200
+    
+    for i in range (0, 10):
+        print(i, f'cropped/{i}_cropped.png')
+        tmpl = Image.open(f'cropped/{i}_cropped.png')
+        res = compare_per_pixel(img, tmpl, threshold)
+
+        if res:
+            print(i, res)
+            num = i
+            return num
+
+    if res == False :
+        res = compare_per_pixel(img, tmpl, threshold+100) # +300 
+ 
+        if res:
+            print(i, res)
+            num = i
+            return num
+
 
 
 def get_nums(grid: list, img_name: str):
@@ -102,9 +148,9 @@ def get_nums(grid: list, img_name: str):
 
             im_crop = im_crop.crop((50, 40, 150, 170)) # новая суженная пропорция
             im_crop.save('cropped.png', quality=95) # для контроля
-            pixels = im_crop.load()
+            # pixels = im_crop.load()
             # im_crop = Image.open('cropped.png')
-            num = recognise_num(pixels)
+            num = recognise_num(im_crop)
             print(num)
             print('----------')
 
@@ -125,5 +171,11 @@ grid = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
 ]
 
-get_nums(grid, 'puzzle')
+get_nums(grid, 'puzzle_3')
 print('end')
+
+grid_size = len(grid)
+
+# terminal output
+for i in range(0, grid_size):
+    print(grid[i])
