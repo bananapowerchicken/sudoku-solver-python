@@ -59,6 +59,7 @@ num_pixel = {
 # print(total_num)
 
 def compare_per_pixel(img1, img2, threshold):
+    # diff_pixel = []
     is_equal = False
     not_equal_pixels_num = 0
     # pixel_threshhold = 1000
@@ -76,11 +77,29 @@ def compare_per_pixel(img1, img2, threshold):
                     not_equal_pixels_num += 1
         print(not_equal_pixels_num, threshold)
         if not_equal_pixels_num <= threshold:
-            is_equal = True 
+            is_equal = True
     else:
         print("Image sizes are not equal!")
     return is_equal
     
+def diff_pixels(img1, img2):
+    # from PIL-fromat to pixels
+    pixels1 = img1.load()
+    pixels2 = img2.load()
+    not_equal_pixels_num = 0
+
+    if (img1.size == img2.size):
+        x1, y1 = img1.size
+        # comparing every pixel
+        for x in range(0,x1):
+            for y in range(0,y1):
+                if pixels1[x,y] != pixels2[x,y]:
+                    not_equal_pixels_num += 1
+        
+    else:
+        print("Image sizes are not equal!")
+    
+    return not_equal_pixels_num
 
 def recognise_num(img):
     num_pixels_amount = 0
@@ -99,25 +118,82 @@ def recognise_num(img):
     #         return i + 1
 
     # compare with templates
-    threshold = 1300 #200
-    
+    threshold = 1200 #200
+    diffs = []
     for i in range (0, 10):
-        print(i, f'cropped/{i}_cropped.png')
+        # print(i, f'cropped/{i}_cropped.png')
         tmpl = Image.open(f'cropped/{i}_cropped.png')
-        res = compare_per_pixel(img, tmpl, threshold)
+        # res = compare_per_pixel(img, tmpl, threshold)
 
-        if res:
-            print(i, res)
-            num = i
-            return num
+        # if res:
+        #     print(i, res)
+        #     num = i
+        #     return num
 
-    if res == False :
-        res = compare_per_pixel(img, tmpl, threshold+100) # +300 
+        diff = diff_pixels(img, tmpl)
+        diffs.append(diff)
+    
+    # print(diffs)
+    # print(min(diffs))
+    # print(diffs.index(min(diffs)))
+    return diffs.index(min(diffs))
+
+    # if res == False:
+    #     for i in range (0, 10):
+    #         print(i, f'cropped/{i}_cropped.png')
+    #         tmpl = Image.open(f'cropped/{i}_cropped.png')
+    #         res = compare_per_pixel(img, tmpl, threshold + 50)
+
+    #         if res:
+    #             print(i, res)
+    #             num = i
+    #             return num
+
+    # if res == False:
+    #     for i in range (0, 10):
+    #         print(i, f'cropped/{i}_cropped.png')
+    #         tmpl = Image.open(f'cropped/{i}_cropped.png')
+    #         res = compare_per_pixel(img, tmpl, threshold + 100)
+
+    #         if res:
+    #             print(i, res)
+    #             num = i
+    #             return num
+    
+    # if res == False:
+    #     for i in range (0, 10):
+    #         print(i, f'cropped/{i}_cropped.png')
+    #         tmpl = Image.open(f'cropped/{i}_cropped.png')
+    #         res = compare_per_pixel(img, tmpl, threshold + 150)
+
+    #         if res:
+    #             print(i, res)
+    #             num = i
+    #             return num
+    
+    # if res == False:
+    #     for i in range (0, 10):
+    #         print(i, f'cropped/{i}_cropped.png')
+    #         tmpl = Image.open(f'cropped/{i}_cropped.png')
+    #         res = compare_per_pixel(img, tmpl, threshold + 200)
+
+    #         if res:
+    #             print(i, res)
+    #             num = i
+    #             return num
+    # if res == False:
+    #     res = compare_per_pixel(img, tmpl, threshold+100)
+        
+    # if res == False:
+    #     res = compare_per_pixel(img, tmpl, threshold+150)
+    
+    # if res == False:
+    #     res = compare_per_pixel(img, tmpl, threshold+200) 
  
-        if res:
-            print(i, res)
-            num = i
-            return num
+        # if res:
+        #     print(i, res)
+        #     num = i
+        #     return num
 
 
 
