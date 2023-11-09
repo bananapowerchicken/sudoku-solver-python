@@ -22,7 +22,8 @@ def download_img(current_folder_addr: str):
     pg.typewrite(current_folder_addr, 0.05)
     pg.hotkey('enter')
 
-    time.sleep(1)
+    time.sleep(5)
+    pg.hotkey('enter')
     pg.hotkey('enter')
 
     print('Image downloaded')

@@ -5,6 +5,10 @@
 # считаю не белые - получаю кол-во пикселей в цифре
 
 from PIL import Image
+import time
+import os
+
+from utils import get_data, solve, download_img
 
 num_color = (52, 72, 97, 255)
 num_pixels_amount = 0
@@ -133,9 +137,9 @@ def recognise_num(img):
         diff = diff_pixels(img, tmpl)
         diffs.append(diff)
     
-    # print(diffs)
-    # print(min(diffs))
-    # print(diffs.index(min(diffs)))
+    print(diffs)
+    print(min(diffs))
+    print(diffs.index(min(diffs)))
     return diffs.index(min(diffs))
 
     # if res == False:
@@ -247,11 +251,24 @@ grid = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
 ]
 
-get_nums(grid, 'puzzle_3')
-print('end')
+get_nums(grid, 'puzzle')
+# print('end')
 
 grid_size = len(grid)
 
 # terminal output
-for i in range(0, grid_size):
-    print(grid[i])
+# for i in range(0, grid_size):
+#     print(grid[i])
+
+curr_fold_address = 'D:\code\sudoku-solver-python'
+img_name = 'puzzle'
+
+
+# download_img(curr_fold_address)
+# time.sleep(15)
+# get_nums(grid, img_name)
+# time.sleep(1)
+# solve(grid)
+
+# os.remove(f'{img_name}.png')
+# os.remove('cropped.png')
