@@ -12,63 +12,13 @@ from utils import get_data, solve, download_img
 
 num_color = (52, 72, 97, 255)
 num_pixels_amount = 0
-# getting cut templates to count pixels for every num
-# for i in range (10):
-#     image = Image.open(f'{i}.png')
-#     pixels = image.load()
 
-#     print(pixels[110, 57])
-#     for x in range(200):
-#         for y in range(200):
-#             if pixels[x,y] != num_color:
-#                 pixels[x,y] = (255, 255, 255)
-#             else:
-#                 num_pixels_amount+=1
-
-#     image.save(f'{i}_white.png', quality=95)
-#     print(num_pixels_amount)
-
-#     im_crop = image.crop((50, 40, 150, 170))
-#     im_crop.save(f'{i}_cropped.png', quality=95) # для контроля
-
-# should be constant here in this program
-# key - num
-# meaning - non-white pixel amount
-num_pixel = {
-    # 0: 0, 
-    1: 1234,
-    2: 3312,
-    3: 5479,
-    4: 7733,
-    5: 10029,
-    6: 12728,
-    7: 14274,
-    8: 17008,
-    9: 19695,
-}
-
-# total_num = 0
-# for i in range (10):
-#     image = Image.open(f'cropped/{i}_cropped.png')
-#     pixels = image.load()
-
-#     for x in range(100):
-#         for y in range(130):
-#             if pixels[x,y] == num_color:
-#                 num_pixels_amount+=1
-#             total_num += 1
-
-#     print(i, num_pixels_amount)
-
-# print(total_num)
 
 def compare_per_pixel(img1, img2, threshold):
     # diff_pixel = []
     is_equal = False
     not_equal_pixels_num = 0
-    # pixel_threshhold = 1000
 
-    # from PIL-fromat to pixels
     pixels1 = img1.load()
     pixels2 = img2.load()
 
@@ -105,101 +55,57 @@ def diff_pixels(img1, img2):
     
     return not_equal_pixels_num
 
-def recognise_num(img):
-    num_pixels_amount = 0
-    # pixels = img.load()
+# return num of dark pixels, making a digit
+def digit_pixels(img):
+    res = 0
+    res1 = 0
+    pixels = img.load()
+    x1, y1 = img.size
+        # comparing every pixel
+    for x in range(0,x1):
+        for y in range(0,y1):
+            if pixels[x,y] != (255, 255, 255, 255):
+                res+=1
 
-    # for x in range(100):
-    #     for y in range(130):
-    #         if pixels[x,y] == num_color:
-    #             num_pixels_amount+=1
+    for x in range(0,x1):
+        for y in range(0,y1):
+            if pixels[x,y] == num_color:
+                res1+=1
+    # print(res, res1, res-res1)
+    return res
+
+def recognise_num(img):    
+
+    # diffs = []
+    # for i in range (0, 10):
+    #     # print(i, f'cropped/{i}_cropped.png')
+    #     tmpl = Image.open(f'cropped/{i}_cropped.png')
+
+    #     diff = diff_pixels(img, tmpl)
+    #     diffs.append(diff)
     
-    # for i in num_pixel.keys():
-    #     print(num_pixels_amount, num_pixel[i])
-    #     if num_pixels_amount == 0:
-    #         return 0
-    #     if num_pixels_amount >= num_pixel[i]:
-    #         return i + 1
-
-    # compare with templates
-    threshold = 1200 #200
+    # print(diffs)
+    # print(min(diffs))
+    # print(diffs.index(min(diffs)))
+    # return diffs.index(min(diffs))
     diffs = []
     for i in range (0, 10):
-        # print(i, f'cropped/{i}_cropped.png')
+        print(i, f'cropped/{i}_cropped.png')
         tmpl = Image.open(f'cropped/{i}_cropped.png')
-        # res = compare_per_pixel(img, tmpl, threshold)
+        res_tmp = digit_pixels(tmpl)
+        res = digit_pixels(img)
+        print(res_tmp, res, abs(res_tmp - res))
+        diffs.append(abs(res_tmp - res))
 
-        # if res:
-        #     print(i, res)
-        #     num = i
-        #     return num
-
-        diff = diff_pixels(img, tmpl)
-        diffs.append(diff)
-    
+        # if abs(res - res_tmp) <= 0:
+        #     return i
     print(diffs)
-    print(min(diffs))
-    print(diffs.index(min(diffs)))
+    print('min', min(diffs))
+    print('min_ind', diffs.index(min(diffs)))
     return diffs.index(min(diffs))
 
-    # if res == False:
-    #     for i in range (0, 10):
-    #         print(i, f'cropped/{i}_cropped.png')
-    #         tmpl = Image.open(f'cropped/{i}_cropped.png')
-    #         res = compare_per_pixel(img, tmpl, threshold + 50)
 
-    #         if res:
-    #             print(i, res)
-    #             num = i
-    #             return num
-
-    # if res == False:
-    #     for i in range (0, 10):
-    #         print(i, f'cropped/{i}_cropped.png')
-    #         tmpl = Image.open(f'cropped/{i}_cropped.png')
-    #         res = compare_per_pixel(img, tmpl, threshold + 100)
-
-    #         if res:
-    #             print(i, res)
-    #             num = i
-    #             return num
     
-    # if res == False:
-    #     for i in range (0, 10):
-    #         print(i, f'cropped/{i}_cropped.png')
-    #         tmpl = Image.open(f'cropped/{i}_cropped.png')
-    #         res = compare_per_pixel(img, tmpl, threshold + 150)
-
-    #         if res:
-    #             print(i, res)
-    #             num = i
-    #             return num
-    
-    # if res == False:
-    #     for i in range (0, 10):
-    #         print(i, f'cropped/{i}_cropped.png')
-    #         tmpl = Image.open(f'cropped/{i}_cropped.png')
-    #         res = compare_per_pixel(img, tmpl, threshold + 200)
-
-    #         if res:
-    #             print(i, res)
-    #             num = i
-    #             return num
-    # if res == False:
-    #     res = compare_per_pixel(img, tmpl, threshold+100)
-        
-    # if res == False:
-    #     res = compare_per_pixel(img, tmpl, threshold+150)
-    
-    # if res == False:
-    #     res = compare_per_pixel(img, tmpl, threshold+200) 
- 
-        # if res:
-        #     print(i, res)
-        #     num = i
-        #     return num
-
-
 
 def get_nums(grid: list, img_name: str):
 
@@ -272,3 +178,9 @@ img_name = 'puzzle'
 
 # os.remove(f'{img_name}.png')
 # os.remove('cropped.png')
+
+# img = Image.open('cropped/8_cropped.png')
+# digit_pixels(img)
+
+# img = Image.open('cropped/3_cropped.png')
+# digit_pixels(img)
