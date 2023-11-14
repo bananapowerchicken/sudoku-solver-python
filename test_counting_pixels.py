@@ -74,20 +74,7 @@ def digit_pixels(img):
     # print(res, res1, res-res1)
     return res
 
-def recognise_num(img):    
-
-    # diffs = []
-    # for i in range (0, 10):
-    #     # print(i, f'cropped/{i}_cropped.png')
-    #     tmpl = Image.open(f'cropped/{i}_cropped.png')
-
-    #     diff = diff_pixels(img, tmpl)
-    #     diffs.append(diff)
-    
-    # print(diffs)
-    # print(min(diffs))
-    # print(diffs.index(min(diffs)))
-    # return diffs.index(min(diffs))
+def recognise_num(img):
     diffs = []
     for i in range (0, 10):
         print(i, f'cropped/{i}_cropped.png')
