@@ -84,8 +84,7 @@ def recognise_num(img):
         print(res_tmp, res, abs(res_tmp - res))
         diffs.append(abs(res_tmp - res))
 
-        # if abs(res - res_tmp) <= 0:
-        #     return i
+
     print(diffs)
     print('min', min(diffs))
     print('min_ind', diffs.index(min(diffs)))
